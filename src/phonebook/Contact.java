@@ -13,31 +13,31 @@ public class Contact{
 		this.email = email;
 	}
 	
-	public String getName() {
-		return this.name;
+	public Contact() {
+
 	}
 
-	public String setName(String name) {
-		this.name = name;
+	public String getName() {
 		return name;
 	}
 
-	public String getNumber() {
-		return this.number;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String setNumber(String number) {
-		this.number = number;
+	public String getNumber() {
 		return number;
 	}
 
-	public String getEmail() {
-		return this.email;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public String setEmail(String email) {
-		this.email = email;
+	public String getEmail() {
 		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

@@ -1,4 +1,5 @@
 package phonebook;
+
 import java.io.BufferedReader;
 //Methods and generaly code that works with data (we will work with an arraylist consisting of "contact" objects.) 
 import java.io.FileNotFoundException;
@@ -16,82 +17,91 @@ import com.google.gson.reflect.TypeToken;
 
 public class Phonebook {
 
-	
-	static ArrayList<Contact>contacts = new ArrayList<Contact>();
-	
-	public static void createContact() throws IOException {
-		
-		Contact contact = new Contact(Menu.userName, Menu.userNumber, Menu.userEmail);
-		
+	private ArrayList<Contact> contacts = new ArrayList<Contact>();
+
+	public void createContact(Contact contact) throws IOException {
 		contacts.add(contact);
-		
 		saveData();
 	}
 
-	public static void showContacts() throws IOException {
+	public boolean findContact(String userName) {
+		for (Contact contact : contacts) {
+			if (contact.getName().equals(userName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void showContacts() throws IOException {
 		int count = 0;
-			if (contacts.isEmpty()) {
-				System.out.println("THERE ARE NO CONTACTS IN THE PHONEBOOK.\n");
-				Menu.select();
-			}
-			System.out.printf("%-23s %-21s %-21s \n", "   NAME:", "PHONE NUMBER:", "E-MAIL:");
-			for (Contact i: contacts) {
-				
-				System.out.printf("%d. %-20s %-21s %s \n", count + 1, i.getName(), i.getNumber(), i.getEmail());
-				count++;
-			}
-			System.out.println();
-		
+
+		if (contacts.isEmpty()) {
+			System.out.println("THERE ARE NO CONTACTS IN THE PHONEBOOK.\n");
+			Menu.showMainMenu();
+		}
+		System.out.printf("%-23s %-21s %-21s \n", "   NAME:", "PHONE NUMBER:", "E-MAIL:");
+
+		for (Contact contact : contacts) {
+			System.out.printf("%d. %-20s %-21s %s \n", count + 1, contact.getName(), contact.getNumber(),
+					contact.getEmail());
+			count++;
+		}
+		System.out.println();
 	}
 
-	public static void deleteContact() throws IOException {
-
-		contacts.remove(Menu.userDelete);
-		saveData();
-	}
-
-	public static void editName() throws IOException {
-		for (Contact c : Phonebook.contacts) {
-
-			if (c.getName() != null && c.getName().contains(Menu.userName)) {
-
-				c.setName(Menu.userName2);
+	public void deleteContact(String userName) throws IOException {
+		for (Contact contact : contacts) {
+			if (contact.getName().equals(userName)) {
+				contacts.remove(contact);
 			}
 		}
+
 		saveData();
 	}
-	public static void editNumber() throws IOException {
-		for (Contact c : Phonebook.contacts) {
 
-			if (c.getNumber() != null && c.getNumber().contains(Menu.userNumber)) {
-
-				c.setNumber(Menu.userNumber2);
+	public void editName(String userName) throws IOException {
+		for (Contact c : contacts) {
+			if (c.getName().equals(userName)) {
+				c.setName(userName);
 			}
 		}
+
 		saveData();
 	}
-	public static void editEmail() throws IOException {
-		for (Contact c : Phonebook.contacts) {
 
-			if (c.getEmail() != null && c.getEmail().contains(Menu.userEmail)) {
-
-				c.setEmail(Menu.userEmail2);
+	public void editNumber(String userNumber) throws IOException {
+		for (Contact contact : contacts) {
+			if (contact.getNumber().equals(userNumber)) {
+				contact.setNumber(userNumber);
 			}
 		}
+
 		saveData();
-}
-	
-	public static void sortContact() throws IOException{
-		
-		Collections.sort(contacts, new Comparator<Contact>(){
+	}
+
+	public void editEmail(String userEmail) throws IOException {
+		for (Contact contact : contacts) {
+			if (contact.getEmail().equals(userEmail)) {
+				contact.setEmail(userEmail);
+			}
+		}
+
+		saveData();
+	}
+
+	public void sortContacts() throws IOException {
+
+		Collections.sort(contacts, new Comparator<Contact>() {
 			public int compare(Contact c1, Contact c2) {
-				return c1.getName().compareTo(c2.getName());	
+				return c1.getName().compareTo(c2.getName());
 			}
 		});
 		saveData();
 	}
-	
-	public static void saveData() throws IOException {
+
+	public void saveData() throws IOException {
 
 		Writer writer = new FileWriter("phonebook.json");
 		Gson gson = new GsonBuilder().create();
@@ -100,21 +110,10 @@ public class Phonebook {
 
 	}
 
-	public static void loadData() throws FileNotFoundException {
+	public void loadData() throws FileNotFoundException {
 		BufferedReader br = new BufferedReader(new FileReader("phonebook.json"));
 		Gson gson = new Gson();
 		contacts = gson.fromJson(br, new TypeToken<ArrayList<Contact>>() {
 		}.getType());
-	}
-	
-	public static void main(String[] args) throws IOException {
-		
-		try {
-			
-		loadData();
-		}
-		catch (FileNotFoundException e){
-		}
-		Menu.select();
 	}
 }
