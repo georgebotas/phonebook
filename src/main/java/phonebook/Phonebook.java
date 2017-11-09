@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.inject.Inject;
+
 public class Phonebook {
-	DBOperations db = new DBOperations();
+	@Inject
+	DBOperations db;
 
 	public void createContact(String userName, String userNumber, String userEmail) {
 		db.create(userName, userNumber, userEmail);

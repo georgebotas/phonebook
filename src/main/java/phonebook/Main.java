@@ -2,10 +2,25 @@ package phonebook;
 
 import java.io.IOException;
 import java.util.Scanner;
+import javax.enterprise.inject.se.*;
+import javax.inject.Inject;
 
 // This class is responsible for printing the menu and taking in user input.
 
 public class Main {
+	@Inject
+    DBOperations ops;
+	
+	public Main() {
+		super();
+        SeContainerInitializer containerInit = SeContainerInitializer.newInstance();
+        SeContainer container = containerInit.initialize();
+		// TODO Auto-generated constructor stub
+        ops.readAll();
+        container.close();
+	}
+
+
 	
 	private static final Scanner SCAN = new Scanner(System.in);
 	
@@ -150,11 +165,16 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Phonebook phoneBook = new Phonebook();
+
+
+
+        
+		//Phonebook phoneBook = new Phonebook();
 		Main main = new Main();
-		Menu.showMainMenu();
-		Integer userInt = SCAN.nextInt();
-		main.select(userInt, phoneBook);
+		//Menu.showMainMenu();
+		//Integer userInt = SCAN.nextInt();
+		//main.select(userInt, phoneBook);
 		//DBOperations.ENTITY_MANAGER_FACTORY.close();
+
 	}
 }

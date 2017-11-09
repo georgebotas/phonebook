@@ -1,6 +1,8 @@
 package phonebook;
 
 public class Menu {
+	@Inject
+	Phonebook;
 	
 	public static void showMainMenu() {
 		System.out.println("THE PHONE BOOK MENU: PLEASE CHOOSE AN OPTION BY ENTERING THE CORESPONDING NUMBER:\n");
