@@ -6,20 +6,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 public class Phonebook {
-	@Inject
-	DBOperations db;
+	
+	@Autowired
+	DBOperations dboperations;
+	
+	
+	public Phonebook() {
+		super();
+	}
 
 	public void createContact(String userName, String userNumber, String userEmail) {
-		db.create(userName, userNumber, userEmail);
-		;
+		dboperations.create(userName, userNumber, userEmail);
 	}
 
 	public void showContacts() {
 
-		ArrayList<Contact> contacts = db.readAll();
+		ArrayList<Contact> contacts = dboperations.readAll();
 		int count = 0;
 		System.out.printf("%-10s %-21s %-21s %-21s \n", "   ID:", "NAME:", "PHONE NUMBER:", "E-MAIL:");
 		try {
@@ -36,30 +42,30 @@ public class Phonebook {
 	}
 	
 	public void validateID(Long contact_id) {
-		db.validate(contact_id);
+		dboperations.validate(contact_id);
 	}
 	
 	public void currentID (Long contact_id) {
-		db.contInfo(contact_id);
+		dboperations.contInfo(contact_id);
 	}
 	public void deleteContact(Long contact_id) {
-		db.delete(contact_id);
+		dboperations.delete(contact_id);
 	}
 
 	public void editName(Long contact_id, String newName) {
-		db.updateName(contact_id, newName);
+		dboperations.updateName(contact_id, newName);
 	}
 
 	public void editNumber(Long contact_id, String newNumber) {
-		db.updateNumber(contact_id, newNumber);
+		dboperations.updateNumber(contact_id, newNumber);
 	}
 
 	public void editEmail(Long contact_id, String newEmail) {
-		db.updateEmail(contact_id, newEmail);
+		dboperations.updateEmail(contact_id, newEmail);
 	}
 
 	public void sortContacts() {
-		ArrayList<Contact> contacts = db.readAll();
+		ArrayList<Contact> contacts = dboperations.readAll();
 		int count = 0;
 		Collections.sort(contacts, new Comparator<Contact>() {
 			public int compare(Contact c1, Contact c2) {

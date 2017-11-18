@@ -1,7 +1,22 @@
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
-	version="1.1" bean-discovery-mode="all">
-	<scan>
-		<exclude name="org.jboss.weld.**" />
-	</scan>
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<context:annotation-config/>
+	
+	<bean id="dboperations" class="phonebook.DBOperations">
+	</bean>
+
+	<bean id="phonebook" class="phonebook.Phonebook">
+	</bean>
+	
+	<bean id="menu" class="phonebook.Menu">
+	</bean>
+
 </beans>

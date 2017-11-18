@@ -1,10 +1,163 @@
 package phonebook;
 
+import java.io.IOException;
+import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 public class Menu {
-	@Inject
-	Phonebook;
-	//TESTING GIT...
-	public static void showMainMenu() {
+	
+	@Autowired
+	Phonebook phonebook;
+	
+	private static final Scanner SCAN = new Scanner(System.in);
+	
+	public Menu() {
+		
+	}
+	public void select(Phonebook phonebook) throws IOException {
+		Integer userSelect = SCAN.nextInt();
+		String userName;
+		String userNumber;
+		String userEmail;
+		Long userID;
+		
+		switch (userSelect) {
+		case 1:
+			phonebook.showContacts();
+			showMainMenu();
+			userSelect = SCAN.nextInt();
+			select(phonebook);
+			break;
+		case 2:
+			System.out.println("ENTER THE CONTACT'S NAME:");
+			SCAN.nextLine();
+			userName = SCAN.nextLine();
+
+			while (!UserInputValidator.validateUserName(userName)) {
+				System.out.println("PLEASE ENTER A VALID NAME.");
+				userName = SCAN.nextLine();
+			}
+
+			System.out.println("ENTER THE CONTACT'S NUMBER:");
+
+			userNumber = SCAN.nextLine();
+
+			while (!UserInputValidator.validateUserNumber(userNumber)) {
+				System.out.println("PLEASE ENTER A VALID NUMBER.");
+				userNumber = SCAN.nextLine();
+			}
+
+			System.out.println("ENTER THE CONTACT'S E-MAIL:");
+
+			userEmail = SCAN.nextLine();
+
+			while (!UserInputValidator.validateUserEmail(userEmail)) {
+				System.out.println("PLEASE ENTER A VALID E-MAIL.");
+				userEmail = SCAN.nextLine();
+			}
+
+			phonebook.createContact(userName, userNumber, userEmail);
+			showMainMenu();
+			userSelect = SCAN.nextInt();
+			select(phonebook);
+			break;
+		case 3:
+			System.out.println("ENTER THE ID OF THE CONTACT YOU WISH TO EDIT:");
+			SCAN.nextLine();
+			userID = SCAN.nextLong();
+			phonebook.validateID(userID);
+			phonebook.currentID(userID);
+			showEditMenu();
+
+			Integer userInt = SCAN.nextInt();
+			switch (userInt) {
+			case 1:
+				System.out.println("ENTER THE NEW NAME FOR THE SELECTED CONTACT:");
+				SCAN.nextLine();
+				userName = SCAN.nextLine();
+
+				while (!UserInputValidator.validateUserName(userName)) {
+					System.out.println("PLEASE ENTER A VALID NAME.");
+					userName = SCAN.nextLine();
+				}
+
+				phonebook.editName(userID, userName);
+
+				System.out.println("THE NAME WAS SUCCESFULLY MODIFIED.\n");
+				showMainMenu();
+				userSelect = SCAN.nextInt();
+				select(phonebook);
+				break;
+			case 2:
+				System.out.println("ENTER THE NUMBER FOR THE SELECTED CONTACT:");
+				SCAN.nextLine();
+				userNumber = SCAN.nextLine();
+
+				while (!UserInputValidator.validateUserNumber(userNumber)) {
+					System.out.println("PLEASE ENTER A VALID NUMBER.");
+					userNumber = SCAN.nextLine();
+				}
+
+				phonebook.editNumber(userID, userNumber);
+
+				System.out.println("THE NUMBER WAS SUCCESFULLY MODIFIED.\n");
+				showMainMenu();
+				userSelect = SCAN.nextInt();
+				select(phonebook);
+				break;
+			case 3:
+				System.out.println("ENTER THE E-MAIL FOR THE SELECTED CONTACT:");
+				SCAN.nextLine();
+				userEmail = SCAN.nextLine();
+				while (!UserInputValidator.validateUserEmail(userEmail)) {
+					System.out.println("PLEASE ENTER A VALID E-MAIL.");
+					userEmail = SCAN.nextLine();
+				}
+
+				phonebook.editEmail(userID, userEmail);
+
+				System.out.println("THE E-MAIL WAS SUCCESFULLY MODIFIED.\n");
+				showMainMenu();
+				userSelect = SCAN.nextInt();
+				select(phonebook);
+				break;
+			default:
+				System.out.println("PLEASE ENTER A VALID NUMBER.");
+				userInt = SCAN.nextInt();
+				break;
+			}
+			break;
+		case 4:
+			System.out.println("ENTER THE ID OF THE CONTACT YOU WISH TO DELETE:");
+			SCAN.nextLine();
+			userID = SCAN.nextLong();
+			phonebook.deleteContact(userID);
+			showMainMenu();
+			userSelect = SCAN.nextInt();
+			select(phonebook);
+			break;
+		case 5:
+			System.out.println("THE CONTACTS SORTED ALPHABETICALY:\n");
+			phonebook.sortContacts();
+			showMainMenu();
+			userSelect = SCAN.nextInt();
+			select(phonebook);
+			break;
+		case 6:
+			System.exit(0);
+			break;
+		default:
+			System.out.println("PLEASE ENTER A VALID NUMBER.");
+			showMainMenu();
+			userSelect = SCAN.nextInt();
+			select(phonebook);
+			break;
+		}
+	}
+	
+	public void showMainMenu() {
 		System.out.println("THE PHONE BOOK MENU: PLEASE CHOOSE AN OPTION BY ENTERING THE CORESPONDING NUMBER:\n");
 
 		System.out.println("1. SHOW ALL CONTACTS");
