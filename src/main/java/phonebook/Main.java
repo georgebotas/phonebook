@@ -14,9 +14,12 @@ public class Main {
 		
 		Phonebook phonebook = new Phonebook();
 		ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/beans.xml");
-        Menu menu = (Menu)context.getBean("menu");
+        
+		Menu menu = (Menu)context.getBean("menu");;
         menu.showMainMenu(); 
-        menu.select(phonebook);
+        Integer userInt = Menu.SCAN.nextInt();
+        menu.select(userInt, phonebook);
+        
         
 		//DBOperations.ENTITY_MANAGER_FACTORY.close();
 

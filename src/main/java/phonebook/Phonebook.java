@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 
 public class Phonebook {
 	
-	@Autowired
+	@Autowired(required=false)
 	DBOperations dboperations;
-	
 	
 	public Phonebook() {
 		super();

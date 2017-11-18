@@ -7,28 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 public class Menu {
-	
-	@Autowired
+
+	@Autowired(required=false)
 	Phonebook phonebook;
 	
-	private static final Scanner SCAN = new Scanner(System.in);
-	
+	public static final Scanner SCAN = new Scanner(System.in);
+
 	public Menu() {
-		
+
 	}
-	public void select(Phonebook phonebook) throws IOException {
-		Integer userSelect = SCAN.nextInt();
+
+	public void select(Integer userSelect, Phonebook phonebook) throws IOException {
+
 		String userName;
 		String userNumber;
 		String userEmail;
 		Long userID;
-		
+		Menu menu = new Menu();
+
 		switch (userSelect) {
 		case 1:
 			phonebook.showContacts();
-			showMainMenu();
+			menu.showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(phonebook);
+			menu.select(userSelect, phonebook);
 			break;
 		case 2:
 			System.out.println("ENTER THE CONTACT'S NAME:");
@@ -61,7 +63,7 @@ public class Menu {
 			phonebook.createContact(userName, userNumber, userEmail);
 			showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(phonebook);
+			select(userSelect, phonebook);
 			break;
 		case 3:
 			System.out.println("ENTER THE ID OF THE CONTACT YOU WISH TO EDIT:");
@@ -88,7 +90,7 @@ public class Menu {
 				System.out.println("THE NAME WAS SUCCESFULLY MODIFIED.\n");
 				showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(phonebook);
+				select(userSelect, phonebook);
 				break;
 			case 2:
 				System.out.println("ENTER THE NUMBER FOR THE SELECTED CONTACT:");
@@ -105,7 +107,7 @@ public class Menu {
 				System.out.println("THE NUMBER WAS SUCCESFULLY MODIFIED.\n");
 				showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(phonebook);
+				select(userSelect, phonebook);
 				break;
 			case 3:
 				System.out.println("ENTER THE E-MAIL FOR THE SELECTED CONTACT:");
@@ -121,7 +123,7 @@ public class Menu {
 				System.out.println("THE E-MAIL WAS SUCCESFULLY MODIFIED.\n");
 				showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(phonebook);
+				select(userSelect, phonebook);
 				break;
 			default:
 				System.out.println("PLEASE ENTER A VALID NUMBER.");
@@ -136,14 +138,14 @@ public class Menu {
 			phonebook.deleteContact(userID);
 			showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(phonebook);
+			select(userSelect, phonebook);
 			break;
 		case 5:
 			System.out.println("THE CONTACTS SORTED ALPHABETICALY:\n");
 			phonebook.sortContacts();
 			showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(phonebook);
+			select(userSelect, phonebook);
 			break;
 		case 6:
 			System.exit(0);
@@ -152,11 +154,11 @@ public class Menu {
 			System.out.println("PLEASE ENTER A VALID NUMBER.");
 			showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(phonebook);
+			select(userSelect, phonebook);
 			break;
 		}
 	}
-	
+
 	public void showMainMenu() {
 		System.out.println("THE PHONE BOOK MENU: PLEASE CHOOSE AN OPTION BY ENTERING THE CORESPONDING NUMBER:\n");
 
@@ -167,7 +169,7 @@ public class Menu {
 		System.out.println("5. SORT CONTACTS");
 		System.out.println("6. EXIT");
 	}
-	
+
 	public static void showEditMenu() {
 		System.out.println("ENTER THE CORESPONDING NUMBER:");
 		System.out.println("1. EDIT NAME\t 2. EDIT PHONE NUMBER \t 3. EDIT E-MAIL");
