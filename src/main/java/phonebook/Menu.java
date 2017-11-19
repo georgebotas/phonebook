@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 public class Menu {
 
-	@Autowired(required=false)
+	@Autowired
 	Phonebook phonebook;
 	
 	public static final Scanner SCAN = new Scanner(System.in);
@@ -17,20 +17,18 @@ public class Menu {
 
 	}
 
-	public void select(Integer userSelect, Phonebook phonebook) throws IOException {
+	public void select(Integer userSelect) throws IOException {
 
 		String userName;
 		String userNumber;
 		String userEmail;
 		Long userID;
-		Menu menu = new Menu();
-
 		switch (userSelect) {
 		case 1:
 			phonebook.showContacts();
-			menu.showMainMenu();
+			this.showMainMenu();
 			userSelect = SCAN.nextInt();
-			menu.select(userSelect, phonebook);
+			this.select(userSelect);
 			break;
 		case 2:
 			System.out.println("ENTER THE CONTACT'S NAME:");
@@ -61,9 +59,9 @@ public class Menu {
 			}
 
 			phonebook.createContact(userName, userNumber, userEmail);
-			showMainMenu();
+			this.showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(userSelect, phonebook);
+			this.select(userSelect);
 			break;
 		case 3:
 			System.out.println("ENTER THE ID OF THE CONTACT YOU WISH TO EDIT:");
@@ -71,7 +69,7 @@ public class Menu {
 			userID = SCAN.nextLong();
 			phonebook.validateID(userID);
 			phonebook.currentID(userID);
-			showEditMenu();
+			this.showEditMenu();
 
 			Integer userInt = SCAN.nextInt();
 			switch (userInt) {
@@ -88,9 +86,9 @@ public class Menu {
 				phonebook.editName(userID, userName);
 
 				System.out.println("THE NAME WAS SUCCESFULLY MODIFIED.\n");
-				showMainMenu();
+				this.showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(userSelect, phonebook);
+				this.select(userSelect);
 				break;
 			case 2:
 				System.out.println("ENTER THE NUMBER FOR THE SELECTED CONTACT:");
@@ -105,9 +103,9 @@ public class Menu {
 				phonebook.editNumber(userID, userNumber);
 
 				System.out.println("THE NUMBER WAS SUCCESFULLY MODIFIED.\n");
-				showMainMenu();
+				this.showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(userSelect, phonebook);
+				this.select(userSelect);
 				break;
 			case 3:
 				System.out.println("ENTER THE E-MAIL FOR THE SELECTED CONTACT:");
@@ -121,9 +119,9 @@ public class Menu {
 				phonebook.editEmail(userID, userEmail);
 
 				System.out.println("THE E-MAIL WAS SUCCESFULLY MODIFIED.\n");
-				showMainMenu();
+				this.showMainMenu();
 				userSelect = SCAN.nextInt();
-				select(userSelect, phonebook);
+				this.select(userSelect);
 				break;
 			default:
 				System.out.println("PLEASE ENTER A VALID NUMBER.");
@@ -136,25 +134,25 @@ public class Menu {
 			SCAN.nextLine();
 			userID = SCAN.nextLong();
 			phonebook.deleteContact(userID);
-			showMainMenu();
+			this.showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(userSelect, phonebook);
+			this.select(userSelect);
 			break;
 		case 5:
 			System.out.println("THE CONTACTS SORTED ALPHABETICALY:\n");
 			phonebook.sortContacts();
-			showMainMenu();
+			this.showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(userSelect, phonebook);
+			this.select(userSelect);
 			break;
 		case 6:
 			System.exit(0);
 			break;
 		default:
 			System.out.println("PLEASE ENTER A VALID NUMBER.");
-			showMainMenu();
+			this.showMainMenu();
 			userSelect = SCAN.nextInt();
-			select(userSelect, phonebook);
+			this.select(userSelect);
 			break;
 		}
 	}
@@ -170,7 +168,7 @@ public class Menu {
 		System.out.println("6. EXIT");
 	}
 
-	public static void showEditMenu() {
+	public void showEditMenu() {
 		System.out.println("ENTER THE CORESPONDING NUMBER:");
 		System.out.println("1. EDIT NAME\t 2. EDIT PHONE NUMBER \t 3. EDIT E-MAIL");
 	}
