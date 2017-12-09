@@ -7,16 +7,10 @@
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	
-	<context:annotation-config/>
-	
-	<bean id="dboperations" class="phonebook.DBOperations">
-	</bean>
 
-	<bean id="phonebook" class="phonebook.Phonebook">
-	</bean>
+	<context:component-scan base-package="main.java.com.georgebotas.phonebook" />
 	
-	<bean id="menu" class="phonebook.Menu">
+	<bean id="imenu" class="main.java.com.georgebotas.phonebook.UI.Menu">
 	</bean>
 
 </beans>

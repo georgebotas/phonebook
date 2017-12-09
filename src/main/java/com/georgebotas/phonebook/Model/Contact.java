@@ -1,4 +1,4 @@
-package phonebook;
+package main.java.com.georgebotas.phonebook.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

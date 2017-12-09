@@ -1,9 +1,8 @@
-package phonebook;
+package main.java.com.georgebotas.phonebook.DB;
+
+import main.java.com.georgebotas.phonebook.Model.Contact;
 
 import java.util.ArrayList;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public interface IDBOperations {
 
@@ -11,9 +10,7 @@ public interface IDBOperations {
 
 	ArrayList<Contact> readAll();
 
-	void validate(Long contact_id);
-
-	void contInfo(Long contact_id);
+	boolean validateID(Long contact_id);
 
 	void updateName(Long contact_id, String newName);
 
@@ -22,5 +19,11 @@ public interface IDBOperations {
 	void updateEmail(Long contact_id, String newEmail);
 
 	void delete(Long contact_id);
+
+    String infoName(Long contact_id);
+
+    String infoNumber(Long contact_id);
+
+    String infoEmail(Long contact_id);
 
 }

@@ -6,12 +6,12 @@
         <!-- Persistence provider -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!-- Entity classes -->
-        <class>phonebook.Contact</class>
+        <class>main.java.com.georgebotas.phonebook.Model.Contact</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:target/derbydb;create=true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="current_session_context_class" value="thread"/>
         </properties>
     </persistence-unit>
